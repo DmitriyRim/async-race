@@ -1,6 +1,13 @@
+import { getCars } from '../../modules/index';
+import Card from '../Card/index';
 import './_garage.sass';
 
+const settings = {
+    limit: 5,
+    page: 1,
+}
 const Garage = {
+    settings,
     init(elem: HTMLElement) {
         const garageContainer = document.createElement('div');
 
@@ -9,6 +16,7 @@ const Garage = {
 
         elem.innerHTML = '';
         elem.append(this.createForm(), garageContainer);
+        this.renderCards(garageContainer);
     },
     createForm() {
         const form = document.createElement('form');
@@ -17,10 +25,29 @@ const Garage = {
         form.innerHTML = 'Form controls';
         return form;
     },
-    renderCards(el: HTMLElement) {
-        el.innerHTML = '';
+    async renderCards(el: HTMLElement) {
+        const h2 = document.createElement('h1');
+        const page = document.createElement('p');
+        const data = getCars(`/garage`);
+        const items = getCars(`/garage?_page=${this.settings.page}&_limit=${this.settings.limit}`);
 
-        el.append();
+
+        h2.classList.add('title');
+        page.innerText = `Page #${this.settings.page}`;
+        data.then(async data => h2.innerText = `Garage(${(await data.json()).length})`);
+        items.then(async data => {
+            const elems: {
+                name: string,
+                id: number,
+                color: string
+            }[] = await data.json();
+            const arr = elems.map(item => {
+                const card = new Card(item);
+                return card.createCard();
+            });
+            el.innerHTML = '';
+            el.append(h2, page, ...arr);
+        })
     }
 }
 
