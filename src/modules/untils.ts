@@ -52,8 +52,7 @@ fill="#000000" stroke="none">
 `
 
 export function getSVGCar (hex: string) {
-    return `
-    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="card__car-img"
+    return `<svg version="1.0" xmlns="http://www.w3.org/2000/svg" class="card__car-img"
                 width="1280.000000pt" height="720.000000pt" viewBox="0 0 1280.000000 566"
                 preserveAspectRatio="xMidYMid meet">
                 <metadata>
@@ -94,6 +93,6 @@ export function getSVGCar (hex: string) {
                 -29 119 -15 145 7 12 13 22 14 22 1 0 31 -9 65 -20z m-7890 -80 c77 -24 216
                 -27 287 -5 27 8 52 12 57 9 4 -3 8 -24 8 -46 0 -131 -94 -228 -223 -228 -122
                 0 -229 125 -211 248 3 23 9 42 13 42 3 0 35 -9 69 -20z"/>
-                </g>
-                </svg>`
+                </g></svg>`
 }
+

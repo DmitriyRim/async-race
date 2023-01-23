@@ -8,7 +8,7 @@ type win = {
     time: number,
 }
 const settings = {
-    page: 2,
+    page: 1,
     limit: 4,
     sort: 'id',
     order: 'ASC',
