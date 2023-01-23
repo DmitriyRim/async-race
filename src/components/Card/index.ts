@@ -38,7 +38,11 @@ class Card {
                 Garage.renderCards();
             });
         });
-
+        const select = cardBox.querySelector('.select');
+        select?.addEventListener('click', (event) => {
+            const id = (event.currentTarget as HTMLButtonElement).dataset.id;
+            Garage.updatedCar(Number(id));
+        })
         return cardBox;
     }
 }

@@ -10,7 +10,7 @@ export const removeCar = (id: number) => {
     return fetch(baseUrl + `/garage/${id}/`, {method: 'DELETE'});
 }
 
-export const addCar = (data: {name: string, color: string}) => {
+export const addCar = (id:number, data: {name: string, color: string}) => {
     const headers = {
         method: 'POST',
         headers: {
@@ -19,4 +19,15 @@ export const addCar = (data: {name: string, color: string}) => {
         body: JSON.stringify(data)
     }
     return fetch(baseUrl + '/garage', headers);
+}
+
+export const updateCar = (id: number, data: {name: string, color: string}) => {
+    const headers = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }
+    return fetch(baseUrl + `/garage/${id}/`, headers);
 }

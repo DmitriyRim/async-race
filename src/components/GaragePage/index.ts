@@ -1,4 +1,4 @@
-import { addCar, getData } from '../../modules/index';
+import { addCar, getData, updateCar } from '../../modules/index';
 import Card from '../Card/index';
 import './_garage.sass';
 
@@ -6,11 +6,13 @@ const settings = {
     limit: 5,
     page: 1,
 }
+
 const Garage = {
     settings,
     garageContainer: document.createElement('div'),
     h2: document.createElement('h1'),
     page: document.createElement('p'),
+    updatedCarId: 0,
     init(elem: HTMLElement) {
         this.garageContainer.classList.add('garage__container');
         this.garageContainer.innerHTML = 'Cards';
@@ -24,8 +26,8 @@ const Garage = {
 
         controlsBlock.classList.add('controls');
         controlsBlock.append(
-            this.createFormElement( addCar, 'Create'),
-            //this.createFormElement( addCar, 'Updete'),
+            this.createFormElement( addCar, 'create', false),
+            this.createFormElement( updateCar, 'updete', true),
         );
         return controlsBlock;
     },
@@ -50,35 +52,63 @@ const Garage = {
             this.garageContainer.append(this.h2, this.page, ...arr);
         })
     },
-    createFormElement(fun: { (data: { name: string; color: string; }): Promise<Response>}, btnText: string): HTMLElement{
+    createFormElement(fun: {(id: number , data: { name: string; color: string; }): Promise<Response> }, btnText: string, state: boolean): HTMLElement{
         const addedContainer = document.createElement('div');
         const input = document.createElement('input');
         const colorInput = document.createElement('input');
-        const submit = document.createElement('button');
+        const submit = document.createElement('input');
 
         input.type = 'text';
         input.placeholder = 'Car brand...';
+        input.disabled = state;
 
         colorInput.type = 'color';
         colorInput.value = '#ffffff';
+        colorInput.disabled = state;
 
         submit.classList.add('controls__btn', 'btn');
+        submit.type = 'submit';
         submit.innerText = btnText;
-        submit.addEventListener('click', () => {
-            if(input.value){
-                fun({name: `${input.value}`,color: `${colorInput.value}`})
-                .then(() => {
-                    this.renderCards();
-                    input.value = '';
-                    colorInput.value = '#ffffff';
-                });
+        submit.disabled = state;
+        if(btnText === 'create'){
+            submit.addEventListener('click', () => {
+                if(input.value){
+                    fun(this.updatedCarId, {name: `${input.value}`,color: `${colorInput.value}`})
+                    .then(() => {
+                        this.renderCards();
+                        input.value = '';
+                        colorInput.value = '#ffffff';
+                    });
+                } 
+            });
+        } 
+        if(btnText === 'updete'){
+            submit.addEventListener('click', () => {
+                if(input.value){
+                    fun(this.updatedCarId, {name: `${input.value}`,color: `${colorInput.value}`})
+                    .then(() => {
+                        this.renderCards();
+                        input.value = '';
+                        colorInput.value = '#ffffff';
+                        this.disabledFormUpdate();
+                    });
+                } 
+            });
+        } 
 
-            } 
-        });
-
-        addedContainer.classList.add('controls__elem');
+        addedContainer.classList.add('controls__elem', `controls__${btnText}`);
         addedContainer.append(input, colorInput, submit);
         return addedContainer;
+    },
+    updatedCar(id: number) {
+        const elems = document.querySelectorAll('.controls__updete > *');
+        this.updatedCarId = id;
+        elems.forEach(item => (item as HTMLInputElement).disabled = false);
+    },
+    disabledFormUpdate() {
+        const elems = document.querySelectorAll('.controls__updete > *');
+        this.updatedCarId = 0;
+        elems.forEach(item => (item as HTMLInputElement).disabled = true);
     }
 }
 
