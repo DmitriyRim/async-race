@@ -96,3 +96,17 @@ export function getSVGCar (hex: string) {
                 </g></svg>`
 }
 
+export function randomColor(){
+    const r = Math.floor(Math.random() * (256));
+    const g = Math.floor(Math.random() * (256));
+    const b = Math.floor(Math.random() * (256));
+    return '#' + r.toString(16) + g.toString(16) + b.toString(16);
+}
+
+export function randomName(){
+    const brand = ['Bailey', 'Bajaj', 'Baker', 'Electric', 'Baldwin-Motion', 'Ballot', 'Baojun', 'Barkas', 'Barreiros', 'Bavaria', 'Bavaria', 'Camp', 'BAW', 'Bean', 'Beaumont', 'Beck', 'Bedford', 'Beijing'];
+    const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+    return brand[Math.floor(Math.random() * (brand.length))] + alpha[Math.floor(Math.random() * (alpha.length))] + alpha[Math.floor(Math.random() * (alpha.length))];
+}
+
+
