@@ -106,7 +106,5 @@ export function randomColor(){
 export function randomName(){
     const brand = ['Bailey', 'Bajaj', 'Baker', 'Electric', 'Baldwin-Motion', 'Ballot', 'Baojun', 'Barkas', 'Barreiros', 'Bavaria', 'Bavaria', 'Camp', 'BAW', 'Bean', 'Beaumont', 'Beck', 'Bedford', 'Beijing'];
     const alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-    return brand[Math.floor(Math.random() * (brand.length))] + alpha[Math.floor(Math.random() * (alpha.length))] + alpha[Math.floor(Math.random() * (alpha.length))];
+    return brand[Math.floor(Math.random() * (brand.length))] + ' ' + alpha[Math.floor(Math.random() * (alpha.length))] + alpha[Math.floor(Math.random() * (alpha.length))];
 }
-
-
