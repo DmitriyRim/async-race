@@ -34,7 +34,10 @@ class Card {
         `;
         const remove = cardBox.querySelector('.remove');
         remove?.addEventListener('click', async () => {
-            removeCar(this.data.id).then(() => {
+            removeCar(this.data.id, '/garage/').then(() => {
+                Garage.renderCards();
+            });
+            removeCar(this.data.id, '/winners/').then(() => {
                 Garage.renderCards();
             });
         });

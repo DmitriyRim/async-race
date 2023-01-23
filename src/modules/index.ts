@@ -6,8 +6,8 @@ export const getData = async (params: string) => {
     return data;
 };
 
-export const removeCar = (id: number) => {
-    return fetch(baseUrl + `/garage/${id}/`, {method: 'DELETE'});
+export const removeCar = (id: number, params: string) => {
+    return fetch(baseUrl + `${params}${id}/`, {method: 'DELETE'});
 }
 
 export const addCar = (id:number, data: {name: string, color: string}) => {
