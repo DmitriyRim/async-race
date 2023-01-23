@@ -1,4 +1,5 @@
 import Garage from '../GaragePage/index';
+import WinnerPage from '../WinnersPage/index';
 import './_main-page.sass';
 
 const MainPage = {
@@ -15,6 +16,7 @@ const MainPage = {
     
         this.btnWinners.classList.add('header__btn');
         this.btnWinners.textContent = 'To Winners';
+        this.btnWinners.addEventListener('click', () => WinnerPage.render(this.contentBox));
     
         this.header.classList.add('header');
         this.header.append(this.btnGarage, this.btnWinners)

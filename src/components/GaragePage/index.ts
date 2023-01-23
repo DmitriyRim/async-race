@@ -1,4 +1,4 @@
-import { getCars } from '../../modules/index';
+import { getData } from '../../modules/index';
 import Card from '../Card/index';
 import './_garage.sass';
 
@@ -28,9 +28,8 @@ const Garage = {
     async renderCards(el: HTMLElement) {
         const h2 = document.createElement('h1');
         const page = document.createElement('p');
-        const data = getCars(`/garage`);
-        const items = getCars(`/garage?_page=${this.settings.page}&_limit=${this.settings.limit}`);
-
+        const data = getData(`/garage`);
+        const items = getData(`/garage?_page=${this.settings.page}&_limit=${this.settings.limit}`);
 
         h2.classList.add('title');
         page.innerText = `Page #${this.settings.page}`;
