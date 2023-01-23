@@ -50,7 +50,7 @@ const Garage = {
             this.garageContainer.append(this.h2, this.page, ...arr);
         })
     },
-    createFormElement(fun: { (data: { name: string; color: string; }): Promise<Response>; (arg0: { name: string; color: string; }): Promise<any>; }, btnText: string): HTMLElement{
+    createFormElement(fun: { (data: { name: string; color: string; }): Promise<Response>}, btnText: string): HTMLElement{
         const addedContainer = document.createElement('div');
         const input = document.createElement('input');
         const colorInput = document.createElement('input');
