@@ -1,4 +1,5 @@
 import { addCar, getData, updateCar } from '../../modules/index';
+import { randomColor, randomName } from '../../modules/untils';
 import Card from '../Card/index';
 import './_garage.sass';
 
@@ -53,7 +54,7 @@ const Garage = {
             this.garageContainer.append(this.h2, this.page, ...arr);
         })
     },
-    createFormElement(fun: {(id: number , data: { name: string; color: string; }): Promise<Response> }, btnText: string, state: boolean): HTMLElement{
+    createFormElement(fun: {(id: number , data: { name: string; color: string; }): Promise<Response> }, btnText: string, state: boolean){
         const addedContainer = document.createElement('div');
         const input = document.createElement('input');
         const colorInput = document.createElement('input');
@@ -106,16 +107,16 @@ const Garage = {
 
         generalBlock.classList.add('controls__elem');
         generalBlock.append(
-            this.createElement('btn', 'Race', console.log(1)),
-            this.createElement('btn', 'Reset', console.log(1)),
-            this.createElement('btn', 'Generate cars', console.log(1)),);
+            //this.createElement('btn', 'Race', console.log),
+            //this.createElement('btn', 'Reset', console.log),
+            this.createElement('btn', 'Generate cars', this.generateRandomCars));
         return generalBlock;
     },
-    createElement(cl: string, value: string, fun: void) {
+    createElement(cl: string, value: string, fun: { (): void; }) {
         const btn = document.createElement('button');
         btn.classList.add(cl);
         btn.textContent = value;
-        btn.addEventListener('click', () => fun);
+        btn.addEventListener('click', fun);
         return btn;
     },
     updatedCar(id: number) {
@@ -128,6 +129,16 @@ const Garage = {
         this.updatedCarId = 0;
         elems.forEach(item => (item as HTMLInputElement).disabled = true);
     },
+    generateRandomCars(){
+        let a = addCar(1, {color: randomColor(), name: randomName()});
+        for (let i = 0; i < 99; i++){
+            a.then(() => {
+                a = addCar(1, {color: randomColor(), name: randomName()});
+            })
+        }
+        a.then(() => Garage.renderCards())
+    },
+
 }
 
 export default Garage;
