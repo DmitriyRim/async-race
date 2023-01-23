@@ -8,7 +8,7 @@ type win = {
     time: number,
 }
 const settings = {
-    page: 1,
+    page: 2,
     limit: 4,
     sort: 'id',
     order: 'ASC',
@@ -25,6 +25,7 @@ const WinnerPage = {
         const table = document.createElement('table');
         const tbody = document.createElement('tbody');
 
+        getData('/winners').then(async data => h2.innerText = `Winners(${(await data.json()).length})`);
         pageNumber.classList.add('winners__page-number');
         pageNumber.innerText = `Page #${this.settings.page}`;
         table.classList.add('winners');
@@ -40,7 +41,6 @@ const WinnerPage = {
 
         data.then(async data => {
             const items: win[] = await data.json();
-            h2.innerText = `Winners(${items.length})`;
             items.forEach(item => {
                 const car = getData(`/garage/?id=${item.id}`);       
                 car.then(async data => {
