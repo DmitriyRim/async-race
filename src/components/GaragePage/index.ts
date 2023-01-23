@@ -3,7 +3,7 @@ import Card from '../Card/index';
 import './_garage.sass';
 
 const settings = {
-    limit: 5,
+    limit: 7,
     page: 1,
 }
 
@@ -28,6 +28,7 @@ const Garage = {
         controlsBlock.append(
             this.createFormElement( addCar, 'create', false),
             this.createFormElement( updateCar, 'updete', true),
+            this.createGeneralBlock()
         );
         return controlsBlock;
     },
@@ -100,6 +101,23 @@ const Garage = {
         addedContainer.append(input, colorInput, submit);
         return addedContainer;
     },
+    createGeneralBlock() {
+        const generalBlock = document.createElement('div');
+
+        generalBlock.classList.add('controls__elem');
+        generalBlock.append(
+            this.createElement('btn', 'Race', console.log(1)),
+            this.createElement('btn', 'Reset', console.log(1)),
+            this.createElement('btn', 'Generate cars', console.log(1)),);
+        return generalBlock;
+    },
+    createElement(cl: string, value: string, fun: void) {
+        const btn = document.createElement('button');
+        btn.classList.add(cl);
+        btn.textContent = value;
+        btn.addEventListener('click', () => fun);
+        return btn;
+    },
     updatedCar(id: number) {
         const elems = document.querySelectorAll('.controls__updete > *');
         this.updatedCarId = id;
@@ -109,7 +127,7 @@ const Garage = {
         const elems = document.querySelectorAll('.controls__updete > *');
         this.updatedCarId = 0;
         elems.forEach(item => (item as HTMLInputElement).disabled = true);
-    }
+    },
 }
 
 export default Garage;
