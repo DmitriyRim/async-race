@@ -36,10 +36,29 @@ const Garage = {
     renderCards() {
         const data = getData(`/garage`);
         const items = getData(`/garage?_page=${this.settings.page}&_limit=${this.settings.limit}`);
+        const paginationBox = document.createElement('div');
+        const prevBtn = this.createBtn('Prev', 'btn');
+        const nextBtn = this.createBtn('Next', 'btn');
 
         this.h2.classList.add('title');
         this.page.innerText = `Page #${this.settings.page}`;
-        data.then(async data => this.h2.innerText = `Garage(${(await data.json()).length})`);
+        data.then(async data => {
+            const elems = (await data.json()).length;
+            this.h2.innerText = `Garage(${elems})`;
+            prevBtn.addEventListener('click', () => {
+                if (this.settings.page > 1) {
+                    this.settings.page--;
+                    this.renderCards();
+                } 
+            });
+            nextBtn.addEventListener('click', () => {
+                if (this.settings.page <= Math.floor(elems / this.settings.limit)) {
+                    this.settings.page++;
+                    this.renderCards();
+                } 
+            });
+            paginationBox.append(prevBtn, nextBtn);
+        });
         items.then(async data => {
             const elems: {
                 name: string,
@@ -51,7 +70,8 @@ const Garage = {
                 return card.createCard();
             });
             this.garageContainer.innerHTML = '';
-            this.garageContainer.append(this.h2, this.page, ...arr);
+
+            this.garageContainer.append(this.h2, this.page, ...arr, paginationBox);
         })
     },
     createFormElement(fun: {(id: number , data: { name: string; color: string; }): Promise<Response> }, btnText: string, state: boolean){
@@ -138,7 +158,13 @@ const Garage = {
         }
         a.then(() => Garage.renderCards())
     },
+    createBtn(str: string, cl: string){
+        const btn = document.createElement('button');
 
+        btn.classList.add(cl);
+        btn.textContent = str;
+        return btn;
+    }
 }
 
 export default Garage;
